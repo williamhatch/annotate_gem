@@ -32,12 +32,14 @@ module AnnotateGem
 
     def write_comments
       gem_lines.reverse.each do |gem_line|
+        p gem_line
         next unless gem_line.should_insert?
         if options[:inline]
           source[gem_line.location] = gem_line.inline_comment
         else
           source.insert(gem_line.location, gem_line.comment)
         end
+        p "==> " + gem_line.comment
       end
       File.write(gemfile_path, source.join)
     end
